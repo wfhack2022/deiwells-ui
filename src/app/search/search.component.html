@@ -1,0 +1,90 @@
+<app-search></app-search>
+<div class="component">
+  <div class="component-container">
+
+    <div class="item item-1">
+      <div class="navigation-heading">
+        <label>Search</label>
+      </div>
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <div class="navigation-search">
+          <input type="text" class="search-input" placeholder="People..." formControlName="people">
+          <input type="text" class="search-input" placeholder="Companies..." formControlName="company">
+          <input type="text" class="search-input" placeholder="Industry..." formControlName="industry">
+          <input type="text" class="search-input" placeholder="Location..." formControlName="location">
+          <input type="text" class="search-input" placeholder="Diversity..." formControlName="diversity">
+        </div>
+        <div class="search-actions">
+          <button type="submit" class="serach-btn" mat-raised-button color="primary">
+            Search
+          </button>
+          <button type="button" class="serach-btn" mat-raised-button color="secondry">
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="item item-2" id="toolbar">
+
+    </div>
+    <div class="item item-3">
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="Company Name">
+            <th mat-header-cell *matHeaderCellDef> Company Name </th>
+            <td mat-cell *matCellDef="let element">
+              <a href="javascript:void(0)" (click)="onCompanySelect(companyName)">
+                <span #companyName class="badge">{{element.name}}</span>
+              </a>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Industry">
+            <th mat-header-cell *matHeaderCellDef> Industry </th>
+            <td mat-cell *matCellDef="let element"> {{element.industries}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="Location">
+            <th mat-header-cell *matHeaderCellDef> Location </th>
+            <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Diversity Dimension">
+            <th mat-header-cell *matHeaderCellDef> Diversity Dimension </th>
+            <td mat-cell *matCellDef="let element"> {{element.diversity}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Score">
+            <th mat-header-cell *matHeaderCellDef> Score </th>
+            <td mat-cell *matCellDef="let element"> {{element.score}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+    </div>
+    <div class="item item-4" id="styles">
+    </div>
+
+    <div class="row-2 row2item1">
+    </div>
+    <div class="row-2 row2item2">
+    </div>
+    <div class="row-2 row2item3">
+      <div class="gbtn">
+
+      </div>
+    </div>
+    <div class="row-2 row2item4">
+
+    </div>
+  </div>
+
+</div>

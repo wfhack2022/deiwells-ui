@@ -1,0 +1,212 @@
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    height: 100%;
+   }
+   
+   body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color:  rgb(250, 250, 247);
+   }
+   
+   .sidebar {
+       width: 8rem;
+       height: 100%;
+       background-color:  rgb(38, 73, 97);
+       /* background-color: rgb(187, 177, 135); */
+       position: fixed;
+       display: flex;
+       flex-direction: column;
+       justify-content: space-between;
+       align-items: center;
+       z-index: 10;
+   }
+   
+   .menu-icon {
+       margin-top: 3rem;
+       cursor: pointer;
+   }
+   
+   .line {
+       height: .2rem;
+       width: 2.5rem;
+       background-color: #fff;
+       margin-bottom: .6rem;
+   }
+   
+   .line-1, .line-3{
+       width: 1.8rem;
+       transition: all .4s;
+   }
+   
+   .menu-icon:hover .line{
+       width: 2.5rem;
+   }
+   
+   
+   /* header */
+   .header {
+       margin-left: 8rem;
+       height: 5vh;
+       display: flex;
+       flex-direction: column;
+   }
+
+   
+   .top-menu-container {
+       background-color: red;
+       border-left: none;
+       border-top: 5px solid rgb(38, 73, 97);
+       border-bottom: 1px solid  rgb(135, 166, 187);
+       height: 7rem;
+       border: 1px solid black;
+   }
+   
+   .top-menu-item {
+       border: 1px solid orange;
+       background-color: orange;
+       display: flex;
+       justify-content: space-evenly;
+       align-items: center;
+       height: .3rem;
+       margin-top: 10px;
+   }
+   
+   .menu-item-1 {
+   
+    height: 5rem;
+    width: 100rem;
+    text-align: center;
+   }
+   
+   .menu-item-2 {
+       margin: 5rem;
+   
+       height: 5rem;
+       width: 100rem;
+       text-align: center;
+   }
+   
+   .menu-item-3 {
+       margin: 5rem;
+   
+       height: 5rem;
+       width: 100rem;
+   }
+   
+   .menu-item-4 {
+       margin: 5rem;
+       margin-right: 20rem;
+   
+       height: 5rem;
+       width: 100rem;
+   }
+   
+   .app-heading {
+       font-family: 'Josefin Sans', sans-serif;
+       font-size: 2.7rem;
+       font-weight: 400;
+       letter-spacing: .2rem;
+       color: #222;
+       text-align: left;
+       margin: 1rem;
+   }
+   
+   .banner {
+       color: #ddd;
+       height: 65rem;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+   }
+   
+   .banner-heading {
+       font-family: 'Josefin Sans', sans-serif;
+       font-size: 7rem;
+       font-weight: 400;
+       margin-bottom: 0;
+   }
+   
+   .banner-paragraph {
+       font-size: 3.5rem;
+       font-weight: 300;
+   }
+   
+   .banner-button {
+       margin: 0.5rem;
+       width: 21rem;
+       padding: .9rem 1rem;
+       font-size: 2rem;
+       color: #333;
+       letter-spacing: .1rem;
+       border: none;
+       border-bottom: 1px solid  rgb(135, 166, 187);
+       border-radius: 1rem;
+       outline: none;
+       /* background: linear-gradient(to right, gold, goldenrod); */
+       background: linear-gradient(to right, rgb(9, 102, 51)); 
+       cursor: pointer;
+   }
+   
+   .banner-button:hover {
+       background: linear-gradient(to left, rgb(38, 73, 97), rgb(226, 222, 213));
+       color: #fff;
+   }
+   
+   .banner-button:active {
+       transform: translateY(0.2rem);
+   }
+   
+
+   .footer {
+       /* margin-left: 8rem;   */
+       bottom: 0;
+       position: fixed;
+       width: 100%;
+
+   }
+   
+   .creator-part {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       background-color:  rgb(250, 250, 247);
+       padding: 0 4rem;
+   }
+   
+   .copyright-text {
+       font-size: 1.3rem;
+       margin-left: 5rem;
+       color: #222;
+       letter-spacing: .1rem;
+      margin-top: 1rem;
+
+   }
+   
+.component {
+    margin-top: 5rem;
+    height: 79.5vh;
+    width: 100%;
+    // border: 0.2px solid green;
+
+}
+
+
+.component-container {
+    height: 100%;
+    margin-left: 8rem;
+   
+    margin-right: 1rem;
+    margin-bottom: 10rem;
+    display: grid;
+    grid-template-rows: 100fr .5fr;
+    grid-template-columns: .8fr .01fr 2fr .2fr;
+    grid-gap: 1px;
+
+}
+
+
+

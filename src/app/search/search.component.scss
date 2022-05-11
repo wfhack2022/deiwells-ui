@@ -1,0 +1,134 @@
+
+.item {
+    font-size: 30px;
+    color: #fff;
+}
+
+
+.navigation-heading {
+    width: 27rem;
+    padding: 1rem 1.8rem;
+    background-color:  rgb(38, 73, 97,.5);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.6rem;
+    color: whitesmoke;
+    letter-spacing: .1rem;
+    outline: none;
+    border: .1rem solid #555;
+    transition: background-color .3s;
+}
+
+.item-1 {
+    background-color:  rgb(247, 247, 241);
+   
+}
+
+
+.mat-list-option {
+    color: #000;
+    letter-spacing: .1rem;
+    font-size: 2rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+table {
+    width: 100%;
+    background-color:  rgb(247, 247, 241);
+  }
+
+  mat-paginator {
+    background-color:  rgb(247, 247, 241);
+  }
+.item-2 {
+    background-color:  rgb(226, 226, 194);
+
+}
+
+.item-3 {
+    background-color:  rgb(247, 247, 241);
+    overflow: auto;
+}
+
+.item-4 {
+      background-color:  rgb(247, 247, 241);
+}
+
+.item-5 {
+    //background-color: #eee;
+}
+
+.row-2 {
+    font-size: 30px;
+    background-color: rgb(233, 231, 225);
+    height: .5rem;
+}
+
+.row2item1 {
+
+}
+
+.row2item2 {
+ 
+}
+.row2item3 {
+
+
+}
+
+.row2item4 {
+   
+}
+
+
+.gbtn {
+    display: flex;
+    flex-direction: row;
+}
+
+.gbtn > button {
+    cursor: pointer;
+}
+
+.navigation-search {
+    position: relative;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-input {
+    margin-top: 1rem;
+    width: 26rem;
+    padding: 1rem 2rem;
+    background-color: beige;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.6rem;
+    color: #deaa86;
+    letter-spacing: .1rem;
+    outline: none;
+    border: .1rem solid #555;
+    /* border-radius: 10rem; */
+    transition: background-color .3s;
+}
+
+.search-actions {
+    border: none;
+    background-color: transparent;
+    color: #deaa86;
+    font-size: 1.7rem;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    display: flex;
+}
+
+.serach-btn {
+    margin: 1.5rem;
+    background-color:rgb(38, 73, 97,.5);
+    left: 100px;
+}
+
+.search-btn:focus {
+    outline: none;
+}
