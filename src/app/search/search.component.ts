@@ -3,8 +3,10 @@ import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/co
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -42,6 +44,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   });
 
   companyDetails:Map<string, {}> = new Map();
+  serviceHost:string;
+  spinner:boolean=false;
 
   
   testdata:any = 
@@ -74,17 +78,19 @@ export class SearchComponent implements OnInit, AfterViewInit {
     private http: HttpClient, 
     private formBuilder: FormBuilder,
     private router:Router,
-    private activatedRoute:ActivatedRoute) { }
+    private activatedRoute:ActivatedRoute,
+    private snackBar: MatSnackBar) { }
 
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
     });
-    this.http.get<[]>("http://localhost:5000/companies").subscribe(response => {
+    this.http.get<[]>("http://"+ environment.serviceHost +":5000/companies").subscribe(response => {
       if(response && response.length){
         this.setCompanies(response);
       }
     });
+
   }
 
   ngAfterViewInit(): void {
@@ -92,9 +98,19 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   onSearch() {
-    console.log(this.searchForm);
-    this.http.get("http://localhost:5000/company/"+this.searchForm.value['company']).subscribe(response => {
+    this.snackBar.open('Live internet search enabled..', 'Undo', {
+      duration: 3000
+    });
+    this.spinner=true;
+    this.http.get("http://"+ environment.serviceHost +":5000/company/"+this.searchForm.value['company']).subscribe(response => {
       console.log(response);
+        this.spinner=false;
+        const res:Array<{}> = (response as Array<{}>);
+        if(res && res.length == 0){
+          this.snackBar.open('Live search did not fetch any data..', 'Undo', {
+            duration: 3000
+          });
+        }
         this.setCompanies(response);
     });
 
@@ -102,20 +118,20 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   private setCompanies(response: Object) {
     for (let i in response) {
-      if (response[i]['about']) {
+      if (response[i]['name']) {
         let companydetail: CompanyType = {
           name: response[i]['name'],
-          diversity: 'Women Founded',
-          industries: response[i]['industry'],
+          diversity: '',
+          industries:  response[i]['address'] ? response[i]['industry'] : 'Unknown',
           score: 5,
-          location: response[i]['address'][1] + ', ' + response[i]['address'][5],
-          about: response[i]['about'],
-          companyDetailUrl: response[i]['companyDetailUrl'],
-          companyUrl: response[i]['companyUrl'],
-          people: response[i]['people'],
-          position: response[i]['position'],
-          news: response[i]['news'],
-          ticker: response[i]['ticker'],
+          location: response[i]['address'] ? response[i]['address'][1] + ', ' + response[i]['address'][5] : '',
+          about: response[i]['about'] ? response[i]['about'] : '',
+          companyDetailUrl: response[i]['companyDetailUrl'] ? response[i]['companyDetailUrl'] : '',
+          companyUrl: response[i]['companyUrl'] ? response[i]['companyUrl'] : '',
+          people: response[i]['people'] ? response[i]['people'] : [],
+          position: response[i]['position'] ? response[i]['position'] : [],
+          news: response[i]['news'] ? response[i]['news'] : [].push(response[i]['companyUrl'] ? response[i]['companyUrl'] : ''),
+          ticker: response[i]['ticker'] ? response[i]['ticker'] : '',
         };
         this.companyDetails.set(response[i]['name'], companydetail);
         this.ELEMENT_DATA.push(companydetail);
@@ -129,6 +145,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   onReset(){
+    this.spinner=false;
     this.searchForm.reset();
   }
 

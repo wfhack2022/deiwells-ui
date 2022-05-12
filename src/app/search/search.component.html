@@ -18,7 +18,7 @@
           <button type="submit" class="serach-btn" mat-raised-button color="primary">
             Search
           </button>
-          <button type="button" class="serach-btn" mat-raised-button color="secondry">
+          <button type="button" class="serach-btn" mat-raised-button color="secondry" (click)="onReset()">
             Reset
           </button>
         </div>
@@ -69,6 +69,7 @@
           aria-label="Select page of periodic elements">
         </mat-paginator>
       </div>
+      <mat-spinner *ngIf="spinner"></mat-spinner>
     </div>
     <div class="item item-4" id="styles">
     </div>
