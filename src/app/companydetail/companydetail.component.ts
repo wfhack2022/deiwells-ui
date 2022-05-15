@@ -25,7 +25,7 @@ export interface News {
 
 export class CompanydetailComponent implements OnInit {
 
-  links = ['People', 'Financials',  'News', 'Recommendaions'];
+  links = ['People', 'Industry'];
   activeLink = this.links[0];
   background: ThemePalette = undefined;
   detail: {} = {};
@@ -86,17 +86,17 @@ export class CompanydetailComponent implements OnInit {
   }
 
   tabClick(event){
-    if(event.index == 1){
-      const hasIframe = document.getElementById('financials');
-      if(!hasIframe){
-        let iframe = document.createElement('iframe');
-        iframe.setAttribute('id', 'financials');
-        iframe.setAttribute('src', this.detail['companyDetailUrl']);
-        iframe.setAttribute('width', '100%');
-        iframe.setAttribute('height', '600');
-        document.getElementById('fin').appendChild(iframe);
-      }
-    }
+    // if(event.index == 1){
+    //   const hasIframe = document.getElementById('financials');
+    //   if(!hasIframe){
+    //     let iframe = document.createElement('iframe');
+    //     iframe.setAttribute('id', 'financials');
+    //     iframe.setAttribute('src', this.detail['companyDetailUrl']);
+    //     iframe.setAttribute('width', '100%');
+    //     iframe.setAttribute('height', '600');
+    //     document.getElementById('fin').appendChild(iframe);
+    //   }
+    // }
   }
 
 }

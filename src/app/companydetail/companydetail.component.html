@@ -8,21 +8,18 @@
             <i class="fa fa-arrow-left" aria-hidden="true"></i>
           </button>
             <label>About {{detail['name']}}</label>
-
+            <a href="{{detail['companyUrl']}}" style="color: white;">
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </a>
          </div>
           <section class="about-us">
      
             <div class="about-us-content">
                 <p class="about-us-paragraph">{{detail['about']}}</p>
             </div>
-
         </section>
-
-
-
       </div>
       <div class="item item-2">
-
       </div>
       <div class="item item-3">
 
@@ -48,13 +45,17 @@
             </div>
             
           </mat-tab>
-          <mat-tab label="Financials">
-            <div class="mat-table">
-              <div id="fin" style="width:100%;height:100%"></div>
+          <mat-tab label="Industry">
+            <div class="industry">
+              <section>
+                <div class="about-us-content" *ngFor="let industry of detail['industries']" >
+                  <p style="text-align: left;">{{industry}}</p>
+                </div>
+            </section>            
             </div>
          </mat-tab>
-          <!-- <mat-tab label="Investments"></mat-tab> -->
-          <mat-tab label="News"> 
+
+          <!-- <mat-tab label="News"> 
             <div class="mat-elevation-z8">
               <table mat-table [dataSource]="newsdatasource">
 
@@ -66,28 +67,14 @@
                     </a>
                   </td>
                 </ng-container>
-
-                <!-- <ng-container matColumnDef="News">
-                  <th mat-header-cell *matHeaderCellDef> News </th>
-                  <td mat-cell *matCellDef="let element"> {{element.companyNews}} </td>
-                </ng-container> -->
                 <tr mat-header-row *matHeaderRowDef="newsColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: newsColumns;"></tr>
               </table>
             </div>
 
           </mat-tab>
-          <mat-tab label="Recommendaions"> </mat-tab>
+          <mat-tab label="Recommendaions"> </mat-tab> -->
         </mat-tab-group>
-
-        <!-- <nav mat-tab-nav-bar [backgroundColor]="background" [tabPanel]="tabPanel">
-            <a mat-tab-link *ngFor="let link of links"
-               (click)="activeLink = link"
-               [active]="activeLink == link"> {{link}} </a>
-             
-          </nav>
-          <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel> -->
-
       </div>
       <div class="item item-4" >
       </div>

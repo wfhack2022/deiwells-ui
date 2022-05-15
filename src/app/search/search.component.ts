@@ -51,27 +51,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
   // @ViewChild(MatSort) sort: MatSort;
   displayTable:boolean = false;
   
-  testdata:any = 
-    [{
-        about: "Stitch Fix, Inc. is an online personalized styling service company. The Company operates primarily in the United States and United Kingdom. The Company delivers one-to-one personalization to its clients through the combination of data science and human judgment. The Company serves its clients in categories, such as women's, petite, maternity, men's, kids, and plus. It uses data science throughout its business, including to style its clients, offer personalized direct buy options, predict purchase behavior, forecast demand, optimize inventory, and design new apparel. The Company leverages its data science through a custom-built, Web-based styling application. Its clients can purchase directly from its Website or mobile application based on a personalized assortment of outfit and item recommendations. The Company also provides a direct-buy offering that allows clients the flexibility of purchasing items outside of a Stitch Fix stylist (Fix).",
-        address: [
-            "1 Montgomery St Ste 1500",
-            "SAN FRANCISCO",
-            ", ",
-            "CA",
-            "94104-4544",
-            "United States"
-        ],
-        industry: "Retail (Catalog & Mail Order)",
-        name: "Stitch Fix Inc"
-    }];
 
   ELEMENT_DATA: CompanyType[] = [
-    // { name: 'WeWork', diversity  : 'Women Founded', industries :'Real Estate',  score: 5, location: 'New York,US'},
-    // { name: 'Fast', diversity  : 'Women Founded', industries :'E-Commerence',  score: 5,  location: 'San Francisco,US'}
+
   ];
 
-  displayedColumns: string[] = ['Company Name', 'Location', 'Diversity Dimension', 'Industry', 'URL'];
+  displayedColumns: string[] = ['Company Name', 'Location', 'Diversity Dimension', 'People', 'URL'];
   dataSource;
   title:string = 'Customer Base';
 
@@ -131,12 +116,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
           diversity: '',
           industries:  response[i]['address'] ? response[i]['industry'] : 'Unknown',
           score: 5,
-          location: response[i]['address'] ? response[i]['address'][1] + ', ' + response[i]['address'][5] : '',
+          location: response[i]['address'] ? response[i]['address'].join() : '',
           about: response[i]['about'] ? response[i]['about'] : '',
           companyDetailUrl: response[i]['companyDetailUrl'] ? response[i]['companyDetailUrl'] : '',
-          companyUrl: response[i]['companyUrl'] ? response[i]['companyUrl'] : '',
-          people: response[i]['people'] ? response[i]['people'] : [],
-          position: response[i]['position'] ? response[i]['position'] : [],
+          companyUrl: response[i]['companyUrl'] ?  response[i]['companyUrl'].startsWith('www') ? 'https://'+response[i]['companyUrl'] : response[i]['companyUrl'] : '',
+          people: response[i]['people'] ?  this.getPeoplePostion(response[i])  : [],
+          position: response[i]['position'] ?  response[i]['position'] : [],
           news: response[i]['news'] ? response[i]['news'] : [].push(response[i]['companyUrl'] ? response[i]['companyUrl'] : ''),
           ticker: response[i]['ticker'] ? response[i]['ticker'] : '',
         };
@@ -147,6 +132,15 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<CompanyType>(this.ELEMENT_DATA);
     this.dataSource.sort = this.cmpTbSort;
     this.displayTable=true;
+  }
+
+  getPeoplePostion(data):any {
+    let people=[];
+    for(let i=0;i<data['people'].length;i++){
+      people.push(data['people'][i] + '-' + data['position'][i]);
+    }
+    return people;
+
   }
 
   onCompanySelect(companyName){
