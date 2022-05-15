@@ -18,6 +18,20 @@
     transition: background-color .3s;
 }
 
+.table-heading {
+    padding: 1rem 1.8rem;
+    background-color:  rgb(38, 73, 97,.5);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.6rem;
+    color: whitesmoke;
+    letter-spacing: .1rem;
+    outline: none;
+    border: .1rem solid #555;
+    transition: background-color .3s;
+    height: 2rem;
+    display: flex;
+}
+
 .item-1 {
     background-color:  rgb(247, 247, 241);
    

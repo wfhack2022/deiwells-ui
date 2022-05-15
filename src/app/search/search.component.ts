@@ -1,14 +1,16 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-
-
+import { onGlobalMenuSection } from '../app.component';
+import { TableUtil } from './TableUtil';
 
 
 export interface CompanyType {
@@ -25,7 +27,6 @@ export interface CompanyType {
   ticker:string;
   companyUrl:string;
 }
-
 
 
 @Component({
@@ -46,7 +47,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
   companyDetails:Map<string, {}> = new Map();
   serviceHost:string;
   spinner:boolean=false;
-
+  @ViewChild('cmpTbSort') cmpTbSort = new MatSort();
+  // @ViewChild(MatSort) sort: MatSort;
+  displayTable:boolean = false;
   
   testdata:any = 
     [{
@@ -68,33 +71,37 @@ export class SearchComponent implements OnInit, AfterViewInit {
     // { name: 'Fast', diversity  : 'Women Founded', industries :'E-Commerence',  score: 5,  location: 'San Francisco,US'}
   ];
 
-  displayedColumns: string[] = ['Company Name', 'Location', 'Diversity Dimension', 'Industry', 'Score'];
+  displayedColumns: string[] = ['Company Name', 'Location', 'Diversity Dimension', 'Industry', 'URL'];
   dataSource;
+  title:string = 'Customer Base';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
 
   constructor(public dialog: MatDialog, 
     private http: HttpClient, 
     private formBuilder: FormBuilder,
     private router:Router,
     private activatedRoute:ActivatedRoute,
-    private snackBar: MatSnackBar) { }
+    private _liveAnnouncer: LiveAnnouncer,
+    private snackBar: MatSnackBar) { 
+      this.title = this.router.getCurrentNavigation().extras.state ?
+                     this.router.getCurrentNavigation().extras.state['customerBase'] : this.title;
+    }
 
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
     });
+
+    onGlobalMenuSection('leads-view');
+  }
+
+  ngAfterViewInit() {
     this.http.get<[]>("http://"+ environment.serviceHost +":5000/companies").subscribe(response => {
       if(response && response.length){
         this.setCompanies(response);
       }
     });
-
-  }
-
-  ngAfterViewInit(): void {
-
   }
 
   onSearch() {
@@ -135,9 +142,11 @@ export class SearchComponent implements OnInit, AfterViewInit {
         };
         this.companyDetails.set(response[i]['name'], companydetail);
         this.ELEMENT_DATA.push(companydetail);
-        this.dataSource = new MatTableDataSource<CompanyType>(this.ELEMENT_DATA);
       }
     }
+    this.dataSource = new MatTableDataSource<CompanyType>(this.ELEMENT_DATA);
+    this.dataSource.sort = this.cmpTbSort;
+    this.displayTable=true;
   }
 
   onCompanySelect(companyName){
@@ -147,6 +156,19 @@ export class SearchComponent implements OnInit, AfterViewInit {
   onReset(){
     this.spinner=false;
     this.searchForm.reset();
+  }
+  
+  exportTable(){
+    TableUtil.exportTableToExcel("minorityOwnedReport");
+  }
+
+  announceSortChange(sortState: Sort) {
+    console.log(sortState);
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 
 

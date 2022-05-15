@@ -2,15 +2,27 @@
 
 <!-- Header -->
 <header class="header">
-
-
         <div class="top-menu-container">
             <h3 class="app-heading">WELLS FARGO deiWells</h3>
-        <div class="top-menu-item">
+        <div class="top-orang-line">
         </div>
+        <div class="top-menu-item">
+            <div class="menu-item-1">
+                <button  id="diversity-view" class="banner-button" (click)="onMenuSection('diversity-view')">My Diversity View</button>
+            </div>
+            <div class="menu-item-2">
+                <button  id="leads-view" class="banner-button" (click)="onMenuSection('leads-view')">My Leads</button>
+            </div>
 
+            <div class="menu-item-3">
+                <button  id="research-view" class="banner-button" (click)="onMenuSection('research-view')">Research Company</button>
+            </div>
+
+            <div class="menu-item-3">
+                <button   id="goals-view" class="banner-button" (click)="onMenuSection('goals-view')">My goals</button>
+            </div>   
+        </div>
     </div>
-
 </header>
     <!-- end of header-->
     <router-outlet></router-outlet>

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { onGlobalMenuSection } from '../app.component';
 
 export interface People {
   name: string;
@@ -77,7 +78,7 @@ export class CompanydetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    onGlobalMenuSection('research-view');
   }
 
   onBack() {

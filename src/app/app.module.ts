@@ -11,13 +11,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent} from './search/search.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CompanydetailComponent } from './companydetail/companydetail.component';
+import { DiversityComponent } from './diversity/diversity.component';
+import { GoalsComponent } from './goals/goals.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     SearchComponent,
-    CompanydetailComponent
+    CompanydetailComponent,
+    DiversityComponent,
+    GoalsComponent
   ],
   imports: [  
     BrowserModule,
@@ -26,7 +31,8 @@ import { CompanydetailComponent } from './companydetail/companydetail.component'
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MaterialAllModules
+    MaterialAllModules,
+    ChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

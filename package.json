@@ -20,13 +20,16 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "chart.js": "^2.9.4",
+    "ng2-charts": "2.4.2",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.1.1",
-    "@angular/cli": "~13.1.1",
+    "@angular-devkit/build-angular": "~13.3.5",
+    "@angular/cli": "~13.3.5",
     "@angular/compiler-cli": "~13.1.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
@@ -38,7 +41,7 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "typescript": "~4.5.2"
   },
-   "browserslist": [
+  "browserslist": [
     "and_chr 101",
     "and_ff 99",
     "and_qq 10.4",

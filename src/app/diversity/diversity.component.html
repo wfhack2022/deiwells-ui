@@ -1,0 +1,57 @@
+<app-search></app-search>
+<div class="component">
+  <div class="component-container">
+
+    <div class="item item-1">
+      <div class="navigation-heading">
+        <label>Goals By Diversity Dimension</label>
+      </div>
+
+        <div class="navigation-search">
+            <mat-selection-list [(ngModel)]="selectedCategory" (selectionChange)="OnSelectionChange($event)">
+                <mat-list-option *ngFor="let category of categories" [value]="categories">
+                  {{category}}
+                </mat-list-option>
+              </mat-selection-list>    
+        </div>
+
+    </div>
+    <div class="item item-2">
+    </div>
+    <div class="item item-3">
+        <h2 style="margin:2rem">Diversity Profile</h2>
+        <canvas baseChart 
+        [data]="pieChartData" 
+        [labels]="pieChartLabels" 
+        [chartType]="pieChartType"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins"
+        [legend]="pieChartLegend">
+      </canvas>
+ 
+    </div>
+    <div class="item item-4" id="styles">
+      <h2 style="margin:2rem">Actual Vs Ambition</h2>
+      <canvas baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      [chartType]="barChartType"></canvas>
+    </div>
+
+    <div class="row-2 row2item1">
+    </div>
+    <div class="row-2 row2item2">
+    </div>
+    <div class="row-2 row2item3">
+      <div class="gbtn">
+
+      </div>
+    </div>
+    <div class="row-2 row2item4">
+
+    </div>
+  </div>
+
+</div>
