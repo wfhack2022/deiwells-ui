@@ -29,20 +29,22 @@ export class AppComponent {
 }
 
 export function onGlobalMenuSection(btnId:string){
-
   var orgClass = 'banner-button';
   var el = document.getElementById('diversity-view');
-  el.className=orgClass;
+  el.setAttribute('class', orgClass);
 
   el = document.getElementById('leads-view');
-  el.className=orgClass;
+  el.setAttribute('class', orgClass);
 
   el = document.getElementById('research-view');
-  el.className=orgClass;
+  el.setAttribute('class', orgClass);
 
   el = document.getElementById('goals-view');
-  el.className=orgClass;
+  el.setAttribute('class', orgClass);
 
+  el = document.getElementById('data-view');
+  el.setAttribute('class', orgClass);
+  
   el = document.getElementById(btnId);
-  el.className = 'banner-button banner-button-selection';
+  el.setAttribute('class', 'banner-button banner-button-selection');
 }
