@@ -82,7 +82,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
     });
-
+    this.spinner=true;
     onGlobalMenuSection('leads-view');
   }
 
@@ -92,6 +92,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     if (this.queryParm) {
       url = "http://" + environment.serviceHost + ":5000/keywordsearch/" + this.queryParm;
     }
+   
     this.http.get<[]>(url).subscribe(response => {
       if (response && response.length) {
         console.log(response.length)
@@ -101,10 +102,13 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   onSearch() {
+    this.spinner=true;
     this.title='Customer Base';
     let url = "http://" + environment.serviceHost + ":5000/company/" + this.searchForm.value['company'];
     if (this.searchForm.value['diversity']) {
       url = "http://" + environment.serviceHost + ":5000/keywordsearch/" + this.searchForm.value['diversity'];
+    }else if(this.searchForm.value['company']==null){
+      url = "http://" + environment.serviceHost + ":5000/companies";
     }
 
     this.ELEMENT_DATA = []
@@ -112,10 +116,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.snackBar.open('Searching please wait..', 'Undo', {
       duration: 3000
     });
-    this.spinner = true;
+
     this.http.get(url).subscribe(response => {
       console.log(response);
-      this.spinner = false;
+
       const res: Array<{}> = (response as Array<{}>);
       if (res && res.length == 0) {
         this.snackBar.open('Live search did not fetch any data..', 'Undo', {
@@ -151,6 +155,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<CompanyType>(this.ELEMENT_DATA);
     this.dataSource.sort = this.cmpTbSort;
     this.displayTable = true;
+    this.spinner = false;
   }
 
   getPeoplePostion(data): any {

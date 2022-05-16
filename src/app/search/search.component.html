@@ -36,7 +36,7 @@
         <h2 style="margin-left: 8rem;margin-top: -0.6rem;">{{title}}</h2>
 
       </div>
-
+      <mat-spinner *ngIf="spinner"></mat-spinner>
       <div class="mat-elevation-z8" *ngIf="displayTable">
         <table matSort  id="minorityOwnedReport" mat-table [dataSource]="dataSource" #cmpTbSort="matSort"  (matSortChange)="announceSortChange($event)">
 
@@ -82,7 +82,6 @@
           aria-label="Select page of periodic elements">
         </mat-paginator>
       </div>
-      <mat-spinner *ngIf="spinner"></mat-spinner>
     </div>
     <div class="item item-4" id="styles">
     </div>

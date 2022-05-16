@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'diversity', component: DiversityComponent },
   { path: 'research', component: CompanydetailComponent },
   { path: 'goals', component: GoalsComponent },
-  { path: '**', component: SearchComponent }
+  { path: '**', component: DiversityComponent }
 ];
 
 @NgModule({
