@@ -1,0 +1,37 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: deiwells-search-ui
+  namespace: default
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 80
+  selector:
+    app: deiwells-search-ui
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deiwells-search-ui
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: deiwells-search-ui
+  template:
+    metadata:
+      labels:
+        app: deiwells-search-ui
+    spec:
+      containers:
+      - env:
+        image: ragunathp/idiversify:latest
+        imagePullPolicy: Always
+        name: deiwells-service
+        ports:
+        - containerPort: 80
+          protocol: TCP
