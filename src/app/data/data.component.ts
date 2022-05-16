@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import * as XLSX from 'xlsx'; 
 
 @Component({
   selector: 'app-data-view',
@@ -11,6 +12,8 @@ export class DataComponent implements OnInit {
   analysisData: Object[] = [];
   displayedColumns: String[] = [];
   dataSource;
+  arrayBuffer:any;
+
 
   constructor() { 
     this.dataSource = new MatTableDataSource<Object>(this.analysisData);
@@ -20,10 +23,10 @@ export class DataComponent implements OnInit {
   }
 
   fileChanged($event): void{
-    this.readThis($event.target);
+    this.readXls($event.target);
   }
 
-  readThis(inputValue: any): void {
+  readCsv(inputValue: any): void {
       var file: File = inputValue.files[0];
       var myReader: FileReader = new FileReader();
       var fileType = inputValue.parentElement.id;
@@ -49,6 +52,39 @@ export class DataComponent implements OnInit {
       }
 
       myReader.readAsText(file);
+  }
+
+  readXls(inputValue: any) {        
+    var self = this;
+    var file: File = inputValue.files[0];
+    let fileReader = new FileReader();
+      fileReader.onload = (e) => {
+          this.arrayBuffer = fileReader.result;
+          var data = new Uint8Array(this.arrayBuffer);
+          var arr = new Array();
+          for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+          var bstr = arr.join("");
+          var workbook = XLSX.read(bstr, {type:"binary"});
+          var first_sheet_name = workbook.SheetNames[0];
+          var worksheet = workbook.Sheets[first_sheet_name];
+          var content:any[] = XLSX.utils.sheet_to_json(worksheet,{raw:true});
+          console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));
+
+          var keysExtracted = false;
+
+          for (let obj of content) {
+            var hydratedData:Object = {}; 
+            for (let key in obj) {
+                if(!keysExtracted){
+                  self.displayedColumns.push(key);
+                }
+                hydratedData[''+key] = obj[key];
+            }
+            self.analysisData.push(hydratedData);
+            keysExtracted = true;
+        }
+      }
+      fileReader.readAsArrayBuffer(file);
   }
 
 }
