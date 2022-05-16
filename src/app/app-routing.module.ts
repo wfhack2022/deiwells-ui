@@ -12,12 +12,9 @@ const routes: Routes = [
   { path: 'diversity', component: DiversityComponent },
   { path: 'research', component: CompanydetailComponent },
   { path: 'goals', component: GoalsComponent },
-<<<<<<< HEAD
-  { path: '**', component: DiversityComponent }
-=======
+  { path: '**', component: DiversityComponent },
   { path: 'data', component: DataComponent },
   { path: '**', component: SearchComponent }
->>>>>>> f31b4ed4ee27676e3b8b1a2c0fc897288493ad20
 ];
 
 @NgModule({
