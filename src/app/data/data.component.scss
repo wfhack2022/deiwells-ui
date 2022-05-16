@@ -1,0 +1,176 @@
+
+.item {
+    font-size: 30px;
+    color: #fff;
+}
+
+
+.navigation-heading {
+    // width: 27rem;
+    padding: 1rem 1.8rem;
+    background-color:  rgb(38, 73, 97,.5);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.6rem;
+    color: whitesmoke;
+    letter-spacing: .1rem;
+    outline: none;
+    border: .1rem solid #555;
+    transition: background-color .3s;
+}
+
+.industry {
+    // width: 27rem;
+    padding: 1rem 1.8rem;
+    background-color:  rgb(247, 247, 241);
+    color:black;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: .1rem;
+    outline: none;
+    border: .2rem solid rgb(247, 247, 241);
+    transition: background-color .3s;
+}
+
+.item-1 {
+    background-color:  rgb(247, 247, 241);
+   
+}
+
+.item-2 {
+    background-color:  rgb(226, 226, 194);
+
+}
+
+.mat-table {
+    width: 1100px;
+    background-color:  rgb(247, 247, 241);
+}
+
+.item-3 {
+    background-color:  rgb(247, 247, 241);
+    overflow: auto;
+    width: 100%;
+}
+
+.item-4 {
+      background-color:  rgb(247, 247, 241);
+}
+
+.item-5 {
+    //background-color: #eee;
+}
+
+.row-2 {
+    font-size: 30px;
+    background-color: rgb(233, 231, 225);
+    height: .5rem;
+}
+
+.row2item1 {
+
+}
+
+.row2item2 {
+ 
+}
+.row2item3 {
+
+
+}
+
+.row2item4 {
+   
+}
+
+
+.gbtn {
+    display: flex;
+    flex-direction: row;
+}
+
+.gbtn > button {
+    cursor: pointer;
+}
+
+.navigation-search {
+    position: relative;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.back-actions {
+    border: none;
+    background-color: transparent;
+    color: #deaa86;
+    font-size: 1.7rem;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    display: flex;
+
+}
+
+.back-btn {
+    margin: 1.5rem;
+    background-color:rgb(38, 73, 97,.5);
+    float: right;
+    bottom: -470px;
+}
+
+.search-btn:focus {
+    outline: none;
+}
+
+.heading{
+    font-weight: bold;
+}
+ 
+  .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: orange;
+}
+
+.mat-tab-label-active {
+    background-color: rgb(226, 209, 177);
+    color: black;
+    border-radius: 5%;
+}
+
+
+.about-us {
+    display: flex;
+    // background-color: #ddd;
+    height: 90%;
+}
+
+.about-us-content {
+    flex: 0 1 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.mat-header-cell{    
+    text-transform: uppercase;
+}
+
+.about-us-heading {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: rgb(52, 51, 51);
+}
+
+.about-us-paragraph {
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 300;
+    text-align: left;
+    margin-bottom: 5rem;
+    color: rgb(52, 51, 51);
+}

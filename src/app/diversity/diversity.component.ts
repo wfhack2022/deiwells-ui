@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChartOptions, ChartType } from 'chart.js';
 import { Label, SingleDataSet } from 'ng2-charts';
+import { environment } from 'src/environments/environment';
 import { onGlobalMenuSection } from '../app.component';
 
 @Component({
@@ -14,16 +15,10 @@ import { onGlobalMenuSection } from '../app.component';
 })
 export class DiversityComponent implements OnInit {
 
-   categories: string[] = ['Women Led', 
-                          'Women Founded', 
-                          'Black African Americal Led',  
-                          'Hispanic Led',
-                          'Sounth Asian Led',
-                          'Differently Abled people Led',
-                        ];
+
    selectedCategory: string[] = [];
 
-
+    graph:boolean=false;
     barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true,
@@ -47,16 +42,39 @@ export class DiversityComponent implements OnInit {
   public pieChartOptions: ChartOptions = {
     responsive: true,
       onClick: (evt, item) => {
-      console.log(item);
-      console.log(this.pieChartLabels[item[0]['_index']]);
       this.router.navigateByUrl('/leads',{ state: { diverity:
          this.pieChartLabels[item[0]['_index']], 
-         customerBase: this.pieChartLabels[item[0]['_index']] + ' '+ this.pieChartData[item[0]['_index']] + '%'} });
+         customerBase: this.pieChartLabels[item[0]['_index']] }  });
+         //+ '('+ this.pieChartData[item[0]['_index']] + ')'
     }
   };
+  categories: string[] = [
+            'Women Led',
+            'Black or African American Led', 
+            'Hispanic or Latino Led', 
+            'Native American or Indigenous', 
+            'Asian-Pacific Americans',
+            'Asian-Indian Americans',
+            'LGBTQIA+',
+            'Veterans',
+            'Unknown'
+          ];
 
-  public pieChartLabels: Label[] = ['Women Led', 'Women Founded', 'Black African Americal Led', 'Hispanic Led', 'Differently Abled people Led', 'Sounth Asian Led'];
-  public pieChartData: SingleDataSet = [20, 30, 20, 5, 5,20];
+  categoriesEnabled: boolean[] = [
+    true,
+    false,
+    false,
+    false, 
+    false,
+    false,
+    false,
+    false,
+    true
+  ];
+
+
+  public pieChartLabels: Label[] = this.categories
+  public pieChartData: SingleDataSet = [0, 0, 0, 0, 0,0, 0,0,0];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
@@ -70,11 +88,26 @@ export class DiversityComponent implements OnInit {
 
   ngOnInit(): void {
     onGlobalMenuSection('diversity-view');
-    const data = this.getGoalData();
-    this.barChartLabels = Object.keys(data);
-    this.barChartLabels.forEach(label => {
-      this.barChartData[0].data.push(data[label]['Actual']);
-      this.barChartData[1].data.push(data[label]['Target']);
+    // const data = this.getGoalData();
+    //   this.barChartLabels = Object.keys(data);
+    //   this.barChartLabels.forEach(label => {
+    //     this.barChartData[0].data.push(data[label]['Actual']);
+    //     this.barChartData[1].data.push(data[label]['Target']);
+    // });
+    this.http.get<[]>("http://"+ environment.serviceHost +":5000/aggregates").subscribe(response => {
+      console.log(response)
+      if(response && response.length>0){
+        for (let diversity of response) {
+          console.log(diversity)
+          Object.keys(diversity).forEach((key) => {
+            console.log(diversity[key]); 
+            const idx = this.categories.indexOf(key);
+            this.pieChartData[idx]=diversity[key];
+          });
+        }
+        console.log(this.pieChartData);
+        this.graph=true;
+      }
     });
   }
 

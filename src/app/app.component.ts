@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -9,14 +10,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AppComponent {
   title = 'deiWells';
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private snackBar: MatSnackBar
+    ) {
   }
 
   onMenuSection(btnId:string){
     const idx = btnId.indexOf('-');
     const routeId = btnId.substring(0, idx);
-    onGlobalMenuSection(btnId);
-    this.router.navigate(['/'+routeId]);
+    if (routeId == 'research'){
+      this.snackBar.open('Please select a company link..', 'Undo', {
+        duration: 3000
+      });
+    }else{
+      onGlobalMenuSection(btnId);
+      this.router.navigate(['/'+routeId]);
+    }
   }
 }
 
