@@ -23,9 +23,9 @@ export interface CompanyType {
   companyDetailUrl: string;
   news: [];
   people: [];
-  position:[];
-  ticker:string;
-  companyUrl:string;
+  position: [];
+  ticker: string;
+  companyUrl: string;
 }
 
 
@@ -37,20 +37,20 @@ export interface CompanyType {
 
 export class SearchComponent implements OnInit, AfterViewInit {
   searchForm = this.formBuilder.group({
-    people:'',
+    people: '',
     company: '',
     industry: '',
     location: '',
-    diversity: '', 
+    diversity: '',
   });
 
-  companyDetails:Map<string, {}> = new Map();
-  serviceHost:string;
-  spinner:boolean=false;
+  companyDetails: Map<string, {}> = new Map();
+  serviceHost: string;
+  spinner: boolean = false;
   @ViewChild('cmpTbSort') cmpTbSort = new MatSort();
   // @ViewChild(MatSort) sort: MatSort;
-  displayTable:boolean = false;
-  
+  displayTable: boolean = false;
+  queryParm: string
 
   ELEMENT_DATA: CompanyType[] = [
 
@@ -58,20 +58,25 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['Company Name', 'Location', 'Diversity Dimension', 'People', 'URL'];
   dataSource;
-  title:string = 'Customer Base';
+  title: string = 'Customer Base';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public dialog: MatDialog, 
-    private http: HttpClient, 
+  constructor(public dialog: MatDialog,
+    private http: HttpClient,
     private formBuilder: FormBuilder,
-    private router:Router,
-    private activatedRoute:ActivatedRoute,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private _liveAnnouncer: LiveAnnouncer,
-    private snackBar: MatSnackBar) { 
-      this.title = this.router.getCurrentNavigation().extras.state ?
-                     this.router.getCurrentNavigation().extras.state['customerBase'] : this.title;
+    private snackBar: MatSnackBar) {
+    console.log(this.router.getCurrentNavigation().extras.state)
+
+    if (this.router.getCurrentNavigation().extras.state) {
+      this.title = this.router.getCurrentNavigation().extras.state['customerBase'];
+      this.queryParm = this.router.getCurrentNavigation().extras.state['diverity'];
     }
+
+  }
 
 
   ngOnInit(): void {
@@ -82,28 +87,42 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.http.get<[]>("http://"+ environment.serviceHost +":5000/companies").subscribe(response => {
-      if(response && response.length){
+
+    let url = "http://" + environment.serviceHost + ":5000/companies";
+    if (this.queryParm) {
+      url = "http://" + environment.serviceHost + ":5000/keywordsearch/" + this.queryParm;
+    }
+    this.http.get<[]>(url).subscribe(response => {
+      if (response && response.length) {
+        console.log(response.length)
         this.setCompanies(response);
       }
     });
   }
 
   onSearch() {
-    this.snackBar.open('Live internet search enabled..', 'Undo', {
+    this.title='Customer Base';
+    let url = "http://" + environment.serviceHost + ":5000/company/" + this.searchForm.value['company'];
+    if (this.searchForm.value['diversity']) {
+      url = "http://" + environment.serviceHost + ":5000/keywordsearch/" + this.searchForm.value['diversity'];
+    }
+
+    this.ELEMENT_DATA = []
+    this.dataSource = new MatTableDataSource<CompanyType>(this.ELEMENT_DATA);
+    this.snackBar.open('Searching please wait..', 'Undo', {
       duration: 3000
     });
-    this.spinner=true;
-    this.http.get("http://"+ environment.serviceHost +":5000/company/"+this.searchForm.value['company']).subscribe(response => {
+    this.spinner = true;
+    this.http.get(url).subscribe(response => {
       console.log(response);
-        this.spinner=false;
-        const res:Array<{}> = (response as Array<{}>);
-        if(res && res.length == 0){
-          this.snackBar.open('Live search did not fetch any data..', 'Undo', {
-            duration: 3000
-          });
-        }
-        this.setCompanies(response);
+      this.spinner = false;
+      const res: Array<{}> = (response as Array<{}>);
+      if (res && res.length == 0) {
+        this.snackBar.open('Live search did not fetch any data..', 'Undo', {
+          duration: 3000
+        });
+      }
+      this.setCompanies(response);
     });
 
   }
@@ -113,16 +132,16 @@ export class SearchComponent implements OnInit, AfterViewInit {
       if (response[i]['name']) {
         let companydetail: CompanyType = {
           name: response[i]['name'],
-          diversity: '',
-          industries:  response[i]['address'] ? response[i]['industry'] : 'Unknown',
+          diversity: response[i]['diversity'] ? response[i]['diversity'] : 'Unknown',
+          industries: response[i]['address'] ? response[i]['industry'] : 'Unknown',
           score: 5,
           location: response[i]['address'] ? response[i]['address'].join() : '',
           about: response[i]['about'] ? response[i]['about'] : '',
           companyDetailUrl: response[i]['companyDetailUrl'] ? response[i]['companyDetailUrl'] : '',
-          companyUrl: response[i]['companyUrl'] ?  response[i]['companyUrl'].startsWith('www') ? 'https://'+response[i]['companyUrl'] : response[i]['companyUrl'] : '',
-          people: response[i]['people'] ?  this.getPeoplePostion(response[i])  : [],
-          position: response[i]['position'] ?  response[i]['position'] : [],
-          news: response[i]['news'] ? response[i]['news'] : [].push(response[i]['companyUrl'] ? response[i]['companyUrl'] : ''),
+          companyUrl: response[i]['companyurl'] ? response[i]['companyurl'].startsWith('www') ? 'https://' + response[i]['companyurl'] : response[i]['companyurl'] : '',
+          people: response[i]['people'] ? this.getPeoplePostion(response[i]) : [],
+          position: response[i]['position'] ? response[i]['position'] : [],
+          news: [],
           ticker: response[i]['ticker'] ? response[i]['ticker'] : '',
         };
         this.companyDetails.set(response[i]['name'], companydetail);
@@ -131,28 +150,31 @@ export class SearchComponent implements OnInit, AfterViewInit {
     }
     this.dataSource = new MatTableDataSource<CompanyType>(this.ELEMENT_DATA);
     this.dataSource.sort = this.cmpTbSort;
-    this.displayTable=true;
+    this.displayTable = true;
   }
 
-  getPeoplePostion(data):any {
-    let people=[];
-    for(let i=0;i<data['people'].length;i++){
+  getPeoplePostion(data): any {
+    let people = [];
+    for (let i = 0; i < data['people'].length; i++) {
       people.push(data['people'][i] + '-' + data['position'][i]);
     }
     return people;
 
   }
 
-  onCompanySelect(companyName){
-    this.router.navigateByUrl('/company', {state: this.companyDetails.get(companyName.textContent)});
+  onCompanySelect(companyName) {
+    this.router.navigateByUrl('/company', { state: this.companyDetails.get(companyName.textContent) });
   }
 
-  onReset(){
-    this.spinner=false;
+  onReset() {
+    this.title='Customer Base';
+    this.spinner = false;
     this.searchForm.reset();
+    this.ELEMENT_DATA = []
+    this.dataSource = new MatTableDataSource<CompanyType>(this.ELEMENT_DATA);
   }
-  
-  exportTable(){
+
+  exportTable() {
     TableUtil.exportTableToExcel("minorityOwnedReport");
   }
 
