@@ -17,7 +17,7 @@ export class DiversityComponent implements OnInit {
 
 
    selectedCategory: string[] = [];
-
+    spinner=false;
     graph:boolean=false;
     barChartOptions: any = {
     scaleShowVerticalLines: false,
@@ -50,31 +50,33 @@ export class DiversityComponent implements OnInit {
   };
   categories: string[] = [
             'Women Led',
-            'Black or African American Led', 
+            'Women Owned**',            
+            'Black or African American Led**', 
             'Hispanic or Latino Led', 
             'Native American or Indigenous', 
             'Asian-Pacific Americans',
             'Asian-Indian Americans',
-            'LGBTQIA+',
-            'Veterans',
+            'LGBTQIA+**',
+            'Veterans**',
             'Unknown'
           ];
 
   categoriesEnabled: boolean[] = [
     true,
-    false,
-    false,
+    true,
+    true,
     false, 
     false,
     false,
-    false,
-    false,
+    false,    
+    true,
+    true,
     true
   ];
 
 
   public pieChartLabels: Label[] = this.categories
-  public pieChartData: SingleDataSet = [0, 0, 0, 0, 0,0, 0,0,0];
+  public pieChartData: SingleDataSet = [0, 0, 0, 0, 0,0, 0,0,0,0];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
@@ -94,6 +96,7 @@ export class DiversityComponent implements OnInit {
     //     this.barChartData[0].data.push(data[label]['Actual']);
     //     this.barChartData[1].data.push(data[label]['Target']);
     // });
+    this.spinner=true;
     this.http.get<[]>("http://"+ environment.serviceHost +":5000/aggregates").subscribe(response => {
       console.log(response)
       if(response && response.length>0){
@@ -107,6 +110,7 @@ export class DiversityComponent implements OnInit {
         }
         console.log(this.pieChartData);
         this.graph=true;
+        this.spinner=false;
       }
     });
   }

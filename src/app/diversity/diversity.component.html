@@ -19,9 +19,10 @@
     </div>
     <div class="item item-2">
     </div>
+    <mat-spinner *ngIf="spinner"></mat-spinner>
     <div class="item item-3" *ngIf="graph">
         <h2 style="margin:2rem; color: black;">Diversity Profile</h2>
-        <canvas baseChart 
+        <canvas baseChart
         [data]="pieChartData" 
         [labels]="pieChartLabels" 
         [chartType]="pieChartType"
